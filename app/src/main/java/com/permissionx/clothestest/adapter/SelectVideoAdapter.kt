@@ -27,9 +27,8 @@ class SelectVideoAdapter(val context:Context, private val videoNumList:List<Int>
         val selectBtn=videoNumList[position]
         holder.selectBtn.text=selectBtn.toString()
         holder.itemView.setOnClickListener{
-            val videoPosition=holder.adapterPosition
-            ItemId.itemId=videoPosition+1
-            Log.d("position!","${videoPosition},${ItemId.itemId}")
+            ItemId.itemId=selectBtn+1
+            Log.d("position!","${selectBtn},${ItemId.itemId}")
         }
     }
 
