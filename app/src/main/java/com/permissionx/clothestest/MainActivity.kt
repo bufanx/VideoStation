@@ -29,12 +29,12 @@ import kotlinx.android.synthetic.main.nav_header.view.*
 class MainActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     @SuppressLint("SetTextI18n")
-    val userComments= mutableListOf<UserComment>(UserComment("bufanx","aaaaaaaaaaaaaaaaaaaaa",R.drawable.apple),
-            UserComment("yanlc","bbb",R.drawable.watermelon),
+    val userComments= mutableListOf<UserComment>(UserComment("bufanx","aaaaaaaaaaaaaaaaaaaaa",R.drawable.pineapple),
+            UserComment("yanlc","bbb",R.drawable.pineapple),
             UserComment("baga","aaaaaaaaaaaaaaaaaaaaacccccccccccccccccccccccccccc",R.drawable.pineapple),
-            UserComment("zbdx","aaaaaaaaaaaaaaaaaaaaa",R.drawable.strawberry),
-            UserComment("bufanx","aaaaaaaaaaaaaaaaaaaaa",R.drawable.cherry),
-            UserComment("bufanx","aaaaaaaaaaaaaaaaaaaaa",R.drawable.banana))
+            UserComment("zbdx","aaaaaaaaaaaaaaaaaaaaa",R.drawable.pineapple),
+            UserComment("bufanx","aaaaaaaaaaaaaaaaaaaaa",R.drawable.pineapple),
+            UserComment("bufanx","aaaaaaaaaaaaaaaaaaaaa",R.drawable.pineapple))
     val userCommentList=ArrayList<UserComment>()
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     @SuppressLint("ResourceAsColor")

@@ -6,9 +6,9 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="ClothesTest"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:icon="@mipmap/ic_launcher_video"
+        android:label="VideoWatching"
+        android:roundIcon="@mipmap/ic_launcher_video_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ClothesTest"
         android:usesCleartextTraffic="true">
@@ -24,8 +24,13 @@
             android:theme="@style/Theme.ClothesTest.NoActionBar" />
         <activity
             android:name=".videoplay.SearchVideo"
-            android:label="@string/title_activity_search_video"
-            android:theme="@style/Theme.ClothesTest.NoActionBar" />
+            android:theme="@style/Theme.ClothesTest.NoActionBar" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".videoplay.VideoPlayWebview"
             android:configChanges="orientation|screenSize|keyboardHidden"
@@ -40,23 +45,11 @@
             android:name=".login.Login"
             android:label="@string/title_activity_login"
             android:theme="@style/Theme.ClothesTest.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".MainActivity"
             android:label="cloth"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <receiver android:name=".MyBroadCastReceiver"
-            android:enabled="true"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="video_id"/>
-            </intent-filter>
-        </receiver>
     </application>
 
 </manifest>

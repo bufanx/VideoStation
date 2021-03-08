@@ -1,5 +1,6 @@
 package com.permissionx.clothestest.videoplay
 
+import android.content.ClipData
 import android.content.Intent
 import android.graphics.Color
 import android.os.Build
@@ -16,6 +17,7 @@ import com.permissionx.clothestest.ItemId
 import com.permissionx.clothestest.MainActivity
 import com.permissionx.clothestest.R
 import com.permissionx.clothestest.adapter.SelectVideoAdapter
+import com.permissionx.clothestest.adapter.SelectVideoByTextAdapter
 import com.permissionx.clothestest.login.LoginViewModel
 import com.permissionx.clothestest.network.GetUrlRequest
 import com.permissionx.clothestest.network.GetUrlResponse
@@ -57,15 +59,36 @@ class ShowVideo : AppCompatActivity() {
         Log.d("videoNumList", videoNumList.toString())
         val layoutManager= GridLayoutManager(this,3)
         select_video_rcv.layoutManager=layoutManager
-        val adapter= SelectVideoAdapter(this,videoNumList)
-        select_video_rcv.adapter=adapter
+        //val adapter= SelectVideoAdapter(this,videoNumList)
+        val adapterText=SelectVideoByTextAdapter(this,videoNumList)
+
+        /*adapter.setOnItemClickListener(object : SelectVideoAdapter.OnItemClickListener {
+            override fun onItemClick(view: View, position: Int) {
+                ItemId.itemId = position + 1
+                Log.d("!!!!!","${ItemId.itemId},${position}")
+            }
+
+            override fun onItemLongClick(view: View, position: Int) {
+                Toast.makeText(this@ShowVideo,"...",Toast.LENGTH_SHORT).show()
+            }
+
+        })*/
+        select_video_rcv.adapter=adapterText
+        adapterText.setOnItemClickListener(object : SelectVideoByTextAdapter.OnItemClickListener {
+            override fun onItemClick(view: View, position: Int) {
+                ItemId.itemId = position + 1
+                Toast.makeText(this@ShowVideo,"已选中第${ItemId.itemId}集,请稍作等待!",Toast.LENGTH_SHORT).show()
+                val requestbody=GetUrlRequest(videoId,ItemId.itemId)
+                viewModel.getVideoUrl(requestbody)
+            }
+
+            override fun onItemLongClick(view: View, position: Int) {
+                Toast.makeText(this@ShowVideo,"...",Toast.LENGTH_SHORT).show()
+            }
+
+        })
         show_video_image.setImageURL(picUrl)
         show_video_text.text=videoDescription
-        beginPlay.setOnClickListener {
-            val requestbody=GetUrlRequest(videoId,ItemId.itemId)
-            Log.d("iddd","videoID:${videoId} itemId:${ItemId.itemId}")
-            viewModel.getVideoUrl(requestbody)
-        }
         viewModel.responseBodyLiveData.observe(this,{ result->
             val response=result.getOrNull() as GetUrlResponse
             Log.d("URL",response.data)
