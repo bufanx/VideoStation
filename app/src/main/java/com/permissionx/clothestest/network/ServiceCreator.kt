@@ -5,7 +5,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 //创建Retrofit构建器
 object ServiceCreator {
-    private const val BASE_URL="http://ai-lab.ltd:5433/"
+    private const val BASE_URL=""
 
     private val retrofit= Retrofit.Builder()
         .baseUrl(BASE_URL)
