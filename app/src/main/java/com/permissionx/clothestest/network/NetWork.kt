@@ -1,11 +1,11 @@
 package com.permissionx.clothestest.network
 
-import android.app.DownloadManager
 import android.util.Log
+import com.permissionx.clothestest.login.LoginRequest
+import com.permissionx.clothestest.register.RegisterRequest
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.await
 import java.lang.RuntimeException
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
@@ -28,6 +28,10 @@ object NetWork {
     private val getVideoUrlService=ServiceCreator.create(GetVideoUrlService::class.java)
     suspend fun getVideoUrl(video_id:Int,item_id:Int)= getVideoUrlService.getVideoUrl(video_id, item_id).await()
 
+    //搜索游戏
+    private val getGameService=GameServiceCreator.create(GetGameService::class.java)
+    suspend fun getGame(name:String)= getGameService.getGame(name).await()
+
     private suspend fun <T> Call<T>.await():T{
         //Log.d("执行挂起函数","挂起")
         return suspendCoroutine {continuation ->
@@ -36,7 +40,7 @@ object NetWork {
                 override fun onResponse(call: Call<T>, response: Response<T>) {
                     Log.d("返回数据前","调用回调函数")
                     val body=response.body()
-                    Log.d("返回数据","${body.toString()}")
+                    Log.d("返回数据", body.toString())
                     if (body!=null)continuation.resume(body)
                     else continuation.resumeWithException(
                             RuntimeException("response body is null"))

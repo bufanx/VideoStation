@@ -8,10 +8,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.permissionx.clothestest.R
 import com.permissionx.clothestest.login.Login
-import com.permissionx.clothestest.login.LoginViewModel
-import com.permissionx.clothestest.network.RegisterRequest
-import com.permissionx.clothestest.network.RegisterResponse
-import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_register.*
 
@@ -32,7 +28,7 @@ class Register : AppCompatActivity() {
                 if (firstPwd!=secondPwd){
                     Toast.makeText(this,"第一次密码与第二次密码不一样,请重新输入密码",Toast.LENGTH_SHORT).show()
                 }else{
-                    val requestBody=RegisterRequest(userName,firstPwd)
+                    val requestBody= RegisterRequest(userName,firstPwd)
                     viewModel.register(requestBody)
                     register_pgb.visibility=View.VISIBLE
                 }

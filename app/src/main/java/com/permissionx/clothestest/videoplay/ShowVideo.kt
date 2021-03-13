@@ -1,39 +1,29 @@
 package com.permissionx.clothestest.videoplay
 
-import android.content.ClipData
+import android.annotation.SuppressLint
 import android.content.Intent
-import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.view.WindowManager
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.permissionx.clothestest.ItemId
-import com.permissionx.clothestest.MainActivity
 import com.permissionx.clothestest.R
-import com.permissionx.clothestest.adapter.SelectVideoAdapter
 import com.permissionx.clothestest.adapter.SelectVideoByTextAdapter
-import com.permissionx.clothestest.login.LoginViewModel
-import com.permissionx.clothestest.network.GetUrlRequest
-import com.permissionx.clothestest.network.GetUrlResponse
-import com.permissionx.clothestest.network.LoginRequest
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_show_video.*
-import java.time.temporal.ValueRange
-import kotlin.math.log
-import kotlin.text.toInt as toInt1
 
 class ShowVideo : AppCompatActivity() {
 
     private val videoNumList= ArrayList<Int>()
     private val viewModel by lazy { ViewModelProvider(this).get(GetVideoUrlViewModel::class.java) }
 
+    @SuppressLint("ResourceAsColor")
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,7 +68,7 @@ class ShowVideo : AppCompatActivity() {
             override fun onItemClick(view: View, position: Int) {
                 ItemId.itemId = position + 1
                 Toast.makeText(this@ShowVideo,"已选中第${ItemId.itemId}集,请稍作等待!",Toast.LENGTH_SHORT).show()
-                val requestbody=GetUrlRequest(videoId,ItemId.itemId)
+                val requestbody= GetUrlRequest(videoId,ItemId.itemId)
                 viewModel.getVideoUrl(requestbody)
             }
 

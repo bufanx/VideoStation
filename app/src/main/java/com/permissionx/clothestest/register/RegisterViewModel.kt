@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.permissionx.clothestest.Repository
-import com.permissionx.clothestest.network.RegisterRequest
 
 class RegisterViewModel:ViewModel() {
     private val requestBodyLiveData= MutableLiveData<RegisterRequest>()

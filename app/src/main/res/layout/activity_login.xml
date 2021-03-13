@@ -41,9 +41,11 @@
             <com.permissionx.clothestest.resource.LineTextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="#E6E8E3"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                tools:layout_editor_absoluteY="82dp">
+                app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
                     android:id="@+id/imageView2"
@@ -141,7 +143,7 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="ClothTest"
+        android:text="VideoStation"
         android:textColor="#FAFAFA"
         android:textSize="40dp"
         app:layout_constraintBottom_toBottomOf="parent"

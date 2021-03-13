@@ -1,6 +1,6 @@
 package com.permissionx.clothestest.network
 
-import com.permissionx.clothestest.videoplay.SearchVideoResponse
+import com.permissionx.clothestest.videoplay.GetUrlResponse
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query

@@ -13,24 +13,30 @@
         android:theme="@style/Theme.ClothesTest"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".videoplay.ShowAllText"
-            android:label="@string/title_activity_show_all_text"
+            android:name=".game.ShowGameWebView"
+            android:label="@string/title_activity_show_game_web_view"
             android:theme="@style/Theme.ClothesTest.NoActionBar">
 
         </activity>
+        <activity
+            android:name=".game.ShowGameInfo"
+            android:label="@string/title_activity_show_game_info"
+            android:theme="@style/Theme.ClothesTest.NoActionBar" />
+        <activity
+            android:name=".game.SearchGame"
+            android:label="@string/title_activity_search_game"
+            android:theme="@style/Theme.ClothesTest.NoActionBar" />
+        <activity
+            android:name=".videoplay.ShowAllText"
+            android:label="@string/title_activity_show_all_text"
+            android:theme="@style/Theme.ClothesTest.NoActionBar" />
         <activity
             android:name=".videoplay.ShowVideo"
             android:label="@string/title_activity_show_video"
             android:theme="@style/Theme.ClothesTest.NoActionBar" />
         <activity
             android:name=".videoplay.SearchVideo"
-            android:theme="@style/Theme.ClothesTest.NoActionBar" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:theme="@style/Theme.ClothesTest.NoActionBar" />
         <activity
             android:name=".videoplay.VideoPlayWebview"
             android:configChanges="orientation|screenSize|keyboardHidden"
@@ -44,12 +50,18 @@
         <activity
             android:name=".login.Login"
             android:label="@string/title_activity_login"
-            android:theme="@style/Theme.ClothesTest.NoActionBar">
+            android:theme="@style/Theme.ClothesTest.NoActionBar" >
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
         </activity>
         <activity
             android:name=".MainActivity"
-            android:label="cloth"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:label="VideoStation"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        </activity>
     </application>
 
 </manifest>

@@ -16,7 +16,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.permissionx.clothestest.MainActivity
 import com.permissionx.clothestest.R
-import com.permissionx.clothestest.network.LoginRequest
 import com.permissionx.clothestest.register.Register
 import com.permissionx.clothestest.videoplay.VideoPlayWebview
 import kotlinx.android.synthetic.main.activity_login.*
@@ -89,7 +88,7 @@ class Login : AppCompatActivity() {
             startActivity(intent)
         }
         find_pwd.setOnClickListener {
-            val intent=Intent(this,VideoPlayWebview::class.java)
+            val intent=Intent(this,MainActivity::class.java)
             startActivity(intent)
         }
     }

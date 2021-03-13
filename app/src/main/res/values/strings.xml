@@ -14,4 +14,7 @@
     <string name="title_activity_search_video">SearchVideo</string>
     <string name="title_activity_show_video">show_video</string>
     <string name="title_activity_show_all_text">ShowAllText</string>
+    <string name="title_activity_search_game">SearchGame</string>
+    <string name="title_activity_show_game_info">ShowGameInfo</string>
+    <string name="title_activity_show_game_web_view">ShowGameWebView</string>
 </resources>

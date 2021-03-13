@@ -1,6 +1,8 @@
 package com.permissionx.clothestest.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.text.Layout
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -28,8 +30,13 @@ class SelectVideoByTextAdapter(private var context: Context, private var videoNu
 
 
 
+    @SuppressLint("ResourceAsColor")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val selectText=videoNumList[position]
+        //holder.selectText.setTextColor(R.color.red)
+        if (position<ItemId.itemId){
+            holder.selectText.setTextColor(R.color.red)
+        }
         holder.selectText.text=selectText.toString()
         holder.itemView.setOnClickListener {
             onItemClickListener.onItemClick(holder.itemView, position)
