@@ -5,7 +5,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object GameServiceCreator {
 
-    private const val BASE_URL="http://10.0.117.218:2799/"
+    private const val BASE_URL=""
 
     private val retrofit= Retrofit.Builder()
         .baseUrl(BASE_URL)
