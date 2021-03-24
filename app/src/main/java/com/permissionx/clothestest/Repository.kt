@@ -9,9 +9,10 @@ import com.permissionx.clothestest.network.NetWork
 import com.permissionx.clothestest.register.RegisterRequest
 import com.permissionx.clothestest.register.RegisterResponse
 import com.permissionx.clothestest.videoplay.GetUrlResponse
+import com.permissionx.clothestest.videoplay.RefreshVideoResponse
 import com.permissionx.clothestest.videoplay.SearchVideoResponse
 import kotlinx.coroutines.Dispatchers
-import java.lang.RuntimeException
+import kotlin.RuntimeException
 
 object Repository {
     //登录
@@ -100,6 +101,24 @@ object Repository {
         }catch (e:Exception){
             Log.d("错误信息e:",e.toString())
             Result.failure<GameSearchResponse>(e)
+        }
+        emit(result)
+    }
+
+    //刷新视频
+    fun refreshVideo(video_id: Int)= liveData(Dispatchers.IO){
+        val result = try {
+            Log.d("仓库层","调用refreshVideo")
+            val refreshVideoResponse=NetWork.refreshVideo(video_id)
+            Log.d("仓库层","调用refreshVideo成功")
+            if (refreshVideoResponse.code==200){
+                Result.success(refreshVideoResponse)
+            }else{
+                Result.failure(RuntimeException("网络超时"))
+            }
+        }catch (e:Exception){
+            Log.d("错误信息e:",e.toString())
+            Result.failure<RefreshVideoResponse>(e)
         }
         emit(result)
     }

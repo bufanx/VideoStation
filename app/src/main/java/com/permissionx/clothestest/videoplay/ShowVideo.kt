@@ -22,6 +22,7 @@ class ShowVideo : AppCompatActivity() {
 
     private val videoNumList= ArrayList<Int>()
     private val viewModel by lazy { ViewModelProvider(this).get(GetVideoUrlViewModel::class.java) }
+    private val refreshViewModel by lazy {ViewModelProvider(this).get(RefreshVideoViewModel::class.java)}
 
     @SuppressLint("ResourceAsColor")
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
@@ -64,6 +65,33 @@ class ShowVideo : AppCompatActivity() {
 
         })*/
         select_video_rcv.adapter=adapterText
+        swipeRefresh.setOnRefreshListener {
+            refreshViewModel.refreshVideo(videoId)
+
+        }
+        refreshViewModel.responseBodyLiveData.observe(this,{result ->
+            val response=result.getOrNull() as RefreshVideoResponse
+            if (response.code==200){
+                videoNumList.clear()
+                for (i in (0 until response.data.toInt())){
+                    videoNumList.add(i+1)
+                }
+                if (videoNumList.isEmpty()){
+                    videoNumList.add(0)
+                    videoNumList.add(0)
+                    videoNumList.add(0)
+                }
+                val layoutManager= GridLayoutManager(this,3)
+                select_video_rcv.layoutManager=layoutManager
+                //val adapter= SelectVideoAdapter(this,videoNumList)
+                val adapterText=SelectVideoByTextAdapter(this,videoNumList)
+                select_video_rcv.adapter=adapterText
+                swipeRefresh.isRefreshing=false
+            }else{
+                //错误的话就返回后端传回来的错误信息
+                Toast.makeText(this,response!!.msg,Toast.LENGTH_SHORT).show()
+            }
+        })
         adapterText.setOnItemClickListener(object : SelectVideoByTextAdapter.OnItemClickListener {
             override fun onItemClick(view: View, position: Int) {
                 ItemId.itemId = position + 1
@@ -93,3 +121,5 @@ class ShowVideo : AppCompatActivity() {
         })
     }
 }
+
+

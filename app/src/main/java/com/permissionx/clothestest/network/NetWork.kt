@@ -32,6 +32,10 @@ object NetWork {
     private val getGameService=GameServiceCreator.create(GetGameService::class.java)
     suspend fun getGame(name:String)= getGameService.getGame(name).await()
 
+    //刷新视频
+    private val refreshVideoService=ServiceCreator.create(RefreshVideoService::class.java)
+    suspend fun refreshVideo(video_id: Int) = refreshVideoService.refreshVideo(video_id).await()
+
     private suspend fun <T> Call<T>.await():T{
         //Log.d("执行挂起函数","挂起")
         return suspendCoroutine {continuation ->

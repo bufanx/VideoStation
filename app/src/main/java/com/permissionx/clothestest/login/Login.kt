@@ -22,6 +22,7 @@ import kotlinx.android.synthetic.main.activity_login.*
 
 class Login : AppCompatActivity() {
 
+
     private val viewModel by lazy { ViewModelProvider(this).get(LoginViewModel::class.java) }
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?) {
