@@ -36,6 +36,10 @@ object NetWork {
     private val refreshVideoService=ServiceCreator.create(RefreshVideoService::class.java)
     suspend fun refreshVideo(video_id: Int) = refreshVideoService.refreshVideo(video_id).await()
 
+    //获得最新APP版本号
+    private val getAppVersionService = UpdateServiceCreator.create(GetAppVersionService::class.java)
+    suspend fun getAppVersion() = getAppVersionService.getAppVersion().await()
+
     private suspend fun <T> Call<T>.await():T{
         //Log.d("执行挂起函数","挂起")
         return suspendCoroutine {continuation ->

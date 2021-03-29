@@ -67,7 +67,6 @@ class ShowVideo : AppCompatActivity() {
         select_video_rcv.adapter=adapterText
         swipeRefresh.setOnRefreshListener {
             refreshViewModel.refreshVideo(videoId)
-
         }
         refreshViewModel.responseBodyLiveData.observe(this,{result ->
             val response=result.getOrNull() as RefreshVideoResponse

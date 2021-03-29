@@ -8,6 +8,7 @@ import com.permissionx.clothestest.login.LoginResponse
 import com.permissionx.clothestest.network.NetWork
 import com.permissionx.clothestest.register.RegisterRequest
 import com.permissionx.clothestest.register.RegisterResponse
+import com.permissionx.clothestest.update.GithubRelease
 import com.permissionx.clothestest.videoplay.GetUrlResponse
 import com.permissionx.clothestest.videoplay.RefreshVideoResponse
 import com.permissionx.clothestest.videoplay.SearchVideoResponse
@@ -122,4 +123,19 @@ object Repository {
         }
         emit(result)
     }
+
+    //获取App最新版本号
+    fun getAppVersion()= liveData(Dispatchers.IO) {
+            val result = try {
+                val appVersionResponse = NetWork.getAppVersion()
+                if (appVersionResponse.author.login=="bufanx"){
+                    Result.success(appVersionResponse)
+                }else {
+                    Result.failure(RuntimeException("网络超时"))
+                }
+        }catch (e:Exception){
+            Result.failure<GithubRelease>(e)
+        }
+            emit(result)
+        }
 }
