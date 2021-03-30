@@ -22,6 +22,7 @@ import com.permissionx.clothestest.MainActivity
 import com.permissionx.clothestest.R
 import com.permissionx.clothestest.Repository
 import com.permissionx.clothestest.Repository.getAppVersion
+import com.permissionx.clothestest.URL
 import com.permissionx.clothestest.network.GetAppVersionService
 import com.permissionx.clothestest.network.UpdateServiceCreator
 import com.permissionx.clothestest.register.Register
@@ -42,11 +43,13 @@ import kotlin.text.toInt as toInt1
 
 class Login : AppCompatActivity() {
 
-    private lateinit var appNowVersionName:String
-    private var appNowVersion by Delegates.notNull<Int>()
-    private var beginUpdateNumber by Delegates.notNull<Int>()
-    private lateinit var appNewVersionName:String
-    private lateinit var updateMsg:String
+    companion object{
+        private lateinit var appNowVersionName:String
+        private var appNowVersion by Delegates.notNull<Int>()
+        private var beginUpdateNumber by Delegates.notNull<Int>()
+        private lateinit var appNewVersionName:String
+        private lateinit var updateMsg:String
+    }
     private val updateViewModel by lazy { ViewModelProvider(this).get(UpdateViewModel::class.java) }
     private val viewModel by lazy { ViewModelProvider(this).get(LoginViewModel::class.java) }
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
@@ -55,36 +58,38 @@ class Login : AppCompatActivity() {
         beginUpdateNumber= (0..666).random()
         updateViewModel.getAppVersion(beginUpdateNumber)
         appNowVersion= Utils.getVersionCode(this)
-        appNowVersionName=Utils.getVersionName(this)
+        appNowVersionName=Version.versionName
         updateViewModel.responseBodyLiveData.observe(this, Observer { result->
             val response=result.getOrNull()
             if (response!=null){
-                appNewVersionName=response.tag_name
-                updateMsg=response.body
-                if (appNowVersionName!=appNewVersionName) {
-                    val temDialog = AlertDialog.Builder(this).setCancelable(false)
-                            .setTitle("检测到新版本！").setMessage("是否立即更新?\n更新内容:${updateMsg}\n新版本号:${appNewVersionName}")
-                            .setPositiveButton("确定"){
-                                _,_ ->
-                                val request=DownloadManager.Request(Uri.parse(Utils.newAppURL))
-                                request.setTitle("更新")
-                                request.setDescription("Downloading Profile")
-                                request.setDestinationInExternalFilesDir(this, Environment.DIRECTORY_DOWNLOADS, "videoStation.apk")
-                                val downloadManager:DownloadManager= this.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
-                                downloadManager.enqueue(request)
-
-                                //Utils.DownNew()//下载更新
-                                //Utils.Tos("请稍后查看通知栏进度！")
-
-                            }.setNegativeButton("取消"){
-                                _,_ ->
-                            }.create()
-                    temDialog!!.show()
-
-                }
+                appNewVersionName=response.data
+                updateMsg=response.msg
+                Log.d("version","new:${appNewVersionName}\nold:${Version.versionName}")
+                if (appNowVersionName == appNewVersionName) {
+                    Toast.makeText(this,"暂无更新\n当前版本号:VideoStation V.${appNowVersionName}",Toast.LENGTH_SHORT).show()
                 }else{
-                    throw RuntimeException("网络超时")
+                    val temDialog = AlertDialog.Builder(this).setCancelable(false)
+                        .setTitle("检测到新版本！").setMessage("是否立即更新?\n更新内容:${updateMsg}\n新版本号:${appNewVersionName}")
+                        .setPositiveButton("确定"){
+                                _,_ ->
+//                                val request=DownloadManager.Request(Uri.parse(URL.NEW_APP_URL))
+//                                request.setTitle("更新")
+//                                request.setDescription("Downloading Profile")
+//                                request.setDestinationInExternalFilesDir(this, Environment.DIRECTORY_DOWNLOADS, "videoStation.apk")
+//                                val downloadManager:DownloadManager= this.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+//                                downloadManager.enqueue(request)
+                            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(URL.NEW_APP_URL)))
+                            //Utils.DownNew()//下载更新
+                            //Utils.Tos("请稍后查看通知栏进度！")
+
+                        }.setNegativeButton("取消"){
+                                _,_ ->
+                        }.create()
+                    temDialog!!.show()
                 }
+            }else{
+                    throw RuntimeException("网络异常!")
+            }
         })
         setContentView(R.layout.activity_login)
         //setSupportActionBar(findViewById(R.id.toolbar))

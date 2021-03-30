@@ -12,7 +12,6 @@ import retrofit2.Response
 
 object Utils {
 
-    const val newAppURL = "https://github.com/bufanx/VideoStation/blob/main/app/release/app-release.apk"
 
     fun getVersionCode(context: Context): Int {
         val pm = context.packageManager
@@ -43,15 +42,15 @@ object Utils {
     fun getAppVersion(){
         var versionName=""
         val getAppVersionService=UpdateServiceCreator.create(GetAppVersionService::class.java)
-        getAppVersionService.getAppVersion().enqueue(object : Callback<GithubRelease> {
-            override fun onFailure(call: Call<GithubRelease>, t: Throwable) {
+        getAppVersionService.getAppVersion().enqueue(object : Callback<LatestVersionResponse> {
+            override fun onFailure(call: Call<LatestVersionResponse>, t: Throwable) {
                 t.printStackTrace()
             }
 
-            override fun onResponse(call: Call<GithubRelease>, response: Response<GithubRelease>) {
+            override fun onResponse(call: Call<LatestVersionResponse>, response: Response<LatestVersionResponse>) {
                 val responseBody = response.body()
                 if (responseBody != null) {
-                    versionName = responseBody.tag_name
+                    versionName = responseBody.data
                     Log.d("AppVersion", versionName)
                 } else throw RuntimeException("连接超时")
             }

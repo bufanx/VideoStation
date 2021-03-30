@@ -1,5 +1,5 @@
 package com.permissionx.clothestest.update
 
 object Version{
-    var versionName:String="1"
+    const val versionName:String="1.0.0.2"
 }

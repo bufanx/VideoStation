@@ -2,6 +2,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="single">
         <item
+            android:id="@+id/checkUpdate"
+            android:icon="@drawable/ic_settings"
+            android:title="检查更新"/>
+        <item
             android:id="@+id/navCall"
             android:icon="@drawable/nav_call"
             android:title="Call"/>

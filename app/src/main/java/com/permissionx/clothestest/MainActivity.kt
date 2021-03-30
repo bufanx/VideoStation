@@ -1,9 +1,11 @@
 package com.permissionx.clothestest
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -16,12 +18,18 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.view.GravityCompat
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.Glide
 import com.permissionx.clothestest.adapter.UserCommentAdapter
 import com.permissionx.clothestest.databinding.ActivityMainBinding
 import com.permissionx.clothestest.forum.UserComment
 import com.permissionx.clothestest.game.SearchGame
+import com.permissionx.clothestest.login.Login
+import com.permissionx.clothestest.update.UpdateViewModel
+import com.permissionx.clothestest.update.Utils
+import com.permissionx.clothestest.update.Version
 import com.permissionx.clothestest.videoplay.SearchVideo
 import com.permissionx.clothestest.videoplay.VideoPlayWebview
 import com.youth.banner.BannerConfig
@@ -33,13 +41,24 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.android.synthetic.main.nav_header.*
 import kotlinx.android.synthetic.main.nav_header.view.*
+import java.lang.RuntimeException
+import kotlin.properties.Delegates
 
 class MainActivity : AppCompatActivity() ,OnBannerListener {
-    //放图片地址的集合
-    //注：在本地也可以，只不过适配器类型为Int，之后在add中直接输入例如R.drawable.dog即可
-    private val listPath:ArrayList<String> = ArrayList()
-    //放标题的集合
-    private val listTitle:ArrayList<String> =ArrayList()
+    companion object{
+        //放图片地址的集合
+        //注：在本地也可以，只不过适配器类型为Int，之后在add中直接输入例如R.drawable.dog即可
+        private val listPath:ArrayList<String> = ArrayList()
+        //放标题的集合
+        private val listTitle:ArrayList<String> =ArrayList()
+        //更新需要的事项
+        private lateinit var appNowVersionName:String
+        private var appNowVersion by Delegates.notNull<Int>()
+        private var beginUpdateNumber by Delegates.notNull<Int>()
+        private lateinit var appNewVersionName:String
+        private lateinit var updateMsg:String
+    }
+    private val updateViewModel by lazy { ViewModelProvider(this).get(UpdateViewModel::class.java) }
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,6 +82,52 @@ class MainActivity : AppCompatActivity() ,OnBannerListener {
              navView.getHeaderView(0).userText.text=username
             navView.getHeaderView(0).mailText.text= "$pwd@qq.com"
         }
+        navView.setNavigationItemSelectedListener {
+            when (it.itemId) {
+                R.id.checkUpdate -> {
+                    beginUpdateNumber = (0..666).random()
+                    updateViewModel.getAppVersion(beginUpdateNumber)
+                    appNowVersion = Utils.getVersionCode(this)
+                    appNowVersionName = Version.versionName
+                }
+            }
+            false
+        }
+
+        //监测更新
+        updateViewModel.responseBodyLiveData.observe(this, Observer { result->
+            val response=result.getOrNull()
+            if (response!=null){
+                appNewVersionName =response.data
+                updateMsg =response.msg
+                Log.d("version","new:${appNewVersionName}\nold:${Version.versionName}")
+                if (appNowVersionName == appNewVersionName) {
+                    Toast.makeText(this,"暂无更新\n当前版本号:VideoStation V.${appNowVersionName}",Toast.LENGTH_SHORT).show()
+                }else{
+                    val temDialog = AlertDialog.Builder(this).setCancelable(false)
+                        .setTitle("检测到新版本！").setMessage("是否立即更新?\n更新内容:${updateMsg}\n新版本号:VideoStation V.${appNewVersionName}")
+                        .setPositiveButton("确定"){
+                                _,_ ->
+//                                val request=DownloadManager.Request(Uri.parse(URL.NEW_APP_URL))
+//                                request.setTitle("更新")
+//                                request.setDescription("Downloading Profile")
+//                                request.setDestinationInExternalFilesDir(this, Environment.DIRECTORY_DOWNLOADS, "videoStation.apk")
+//                                val downloadManager:DownloadManager= this.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+//                                downloadManager.enqueue(request)
+                            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(URL.NEW_APP_URL)))
+                            //Utils.DownNew()//下载更新
+                            //Utils.Tos("请稍后查看通知栏进度！")
+
+                        }.setNegativeButton("取消"){
+                                _,_ ->
+                        }.create()
+                    temDialog!!.show()
+                }
+            }else{
+                throw RuntimeException("网络异常!")
+            }
+        })
+
         //加载轮播效果
         initView()
 

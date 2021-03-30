@@ -9,6 +9,7 @@ import com.permissionx.clothestest.network.NetWork
 import com.permissionx.clothestest.register.RegisterRequest
 import com.permissionx.clothestest.register.RegisterResponse
 import com.permissionx.clothestest.update.GithubRelease
+import com.permissionx.clothestest.update.LatestVersionResponse
 import com.permissionx.clothestest.videoplay.GetUrlResponse
 import com.permissionx.clothestest.videoplay.RefreshVideoResponse
 import com.permissionx.clothestest.videoplay.SearchVideoResponse
@@ -128,13 +129,13 @@ object Repository {
     fun getAppVersion()= liveData(Dispatchers.IO) {
             val result = try {
                 val appVersionResponse = NetWork.getAppVersion()
-                if (appVersionResponse.author.login=="bufanx"){
+                if (appVersionResponse.code==200){
                     Result.success(appVersionResponse)
                 }else {
                     Result.failure(RuntimeException("网络超时"))
                 }
         }catch (e:Exception){
-            Result.failure<GithubRelease>(e)
+            Result.failure<LatestVersionResponse>(e)
         }
             emit(result)
         }
