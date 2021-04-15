@@ -30,6 +30,8 @@
         android:ems="10"
         android:hint="此处输入"
         android:inputType="textPostalAddress"
+        android:imeOptions="actionSearch"
+        android:singleLine="true"
         android:padding="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

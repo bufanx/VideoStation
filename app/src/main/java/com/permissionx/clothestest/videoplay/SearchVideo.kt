@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.WindowManager
+import android.view.inputmethod.EditorInfo
+import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -37,18 +39,22 @@ class SearchVideo : AppCompatActivity() {
             viewModel.searchVideo(query)
             search_video_pgb.visibility=View.VISIBLE
         }
+        search_video_edit.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                val query:String=search_video_edit.text.toString()
+                viewModel.searchVideo(query)
+            }
+            false
+        }
+
         viewModel.responseBodyLiveData.observe(this,{result->
             response= result.getOrNull() as SearchVideoResponse
-            if (response!=null){
-                initVideos()
-                val layoutManager= GridLayoutManager(this,1)
-                video_play_rcv.layoutManager=layoutManager
-                val adapter= VideoAdapter(videoList,this)
-                video_play_rcv.adapter=adapter
-                Log.d("videoList","$videoList")
-            }else{
-                Toast.makeText(this,"response null",Toast.LENGTH_SHORT).show()
-            }
+            initVideos()
+            val layoutManager= GridLayoutManager(this,1)
+            video_play_rcv.layoutManager=layoutManager
+            val adapter= VideoAdapter(videoList,this)
+            video_play_rcv.adapter=adapter
+            Log.d("videoList","$videoList")
             search_video_pgb.visibility=View.GONE
         })
     }
