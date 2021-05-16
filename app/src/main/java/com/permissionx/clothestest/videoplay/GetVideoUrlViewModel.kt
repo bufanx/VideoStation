@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import com.permissionx.clothestest.Repository
+import com.permissionx.clothestest.network.Repository
 
 class GetVideoUrlViewModel:ViewModel() {
 

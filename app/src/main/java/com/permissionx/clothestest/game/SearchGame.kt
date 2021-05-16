@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.WindowManager
+import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -16,6 +17,7 @@ import com.permissionx.clothestest.adapter.ShowGameAdapter
 import com.permissionx.clothestest.videoplay.SearchVideoResponse
 import com.permissionx.clothestest.videoplay.VideoItem
 import kotlinx.android.synthetic.main.activity_search_game.*
+import kotlinx.android.synthetic.main.activity_search_video.*
 
 class SearchGame : AppCompatActivity() {
 
@@ -38,6 +40,14 @@ class SearchGame : AppCompatActivity() {
             Log.d("game_name",name)
             viewModel.getGame(name)
             search_game_pgb.visibility=View.VISIBLE
+        }
+        game_input.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                val name:String=game_input.text.toString()
+                Log.d("game_name",name)
+                viewModel.getGame(name)
+            }
+            false
         }
         viewModel.responseBodyLiveData.observe(this,{ result->
             response=result.getOrNull() as GameSearchResponse

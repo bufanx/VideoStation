@@ -2,29 +2,42 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.permissionx.clothestest"
-    android:versionCode="1"
-    android:versionName="1.0.0.1">
+    android:versionCode="3"
+    android:versionName="1.0.0.4">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         tools:ignore="ScopedStorage" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission
+        android:name="android.permission.MEDIA_CONTENT_CONTROL"
+        tools:ignore="ProtectedPermissions" />
 
     <application
-        android:requestLegacyExternalStorage="true"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher_video"
         android:label="VideoWatching"
+        android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_video_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ClothesTest"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".videoplay.SystemMediaVideoPlay"
+            android:label="@string/title_activity_system_media_video_play"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
+            android:configChanges="screenSize|keyboardHidden"
+            android:screenOrientation="sensor">
+        </activity>
+        <activity
             android:name=".game.ShowGameWebView"
             android:label="@string/title_activity_show_game_web_view"
             android:theme="@style/Theme.ClothesTest.NoActionBar">
-
         </activity>
         <activity
             android:name=".game.ShowGameInfo"
@@ -57,18 +70,18 @@
             android:theme="@style/Theme.ClothesTest.NoActionBar" />
         <activity
             android:name=".login.Login"
-            android:label="@string/title_activity_login"
-            android:theme="@style/Theme.ClothesTest.NoActionBar" >
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
+            android:label="戴个耳机"
+            android:theme="@style/Theme.ClothesTest.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".MainActivity"
             android:label="VideoStation"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
         </activity>
     </application>
 

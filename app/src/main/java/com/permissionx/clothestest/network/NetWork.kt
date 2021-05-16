@@ -1,11 +1,20 @@
 package com.permissionx.clothestest.network
 
 import android.util.Log
+import com.permissionx.clothestest.game.GetGameService
 import com.permissionx.clothestest.login.LoginRequest
+import com.permissionx.clothestest.login.LoginService
+import com.permissionx.clothestest.music.MusicService
 import com.permissionx.clothestest.register.RegisterRequest
+import com.permissionx.clothestest.register.RegisterService
+import com.permissionx.clothestest.update.GetAppVersionService
+import com.permissionx.clothestest.videoplay.GetVideoUrlService
+import com.permissionx.clothestest.videoplay.RefreshVideoService
+import com.permissionx.clothestest.videoplay.VideoService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import retrofit2.await
 import java.lang.RuntimeException
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
@@ -39,6 +48,10 @@ object NetWork {
     //获得最新APP版本号
     private val getAppVersionService = UpdateServiceCreator.create(GetAppVersionService::class.java)
     suspend fun getAppVersion() = getAppVersionService.getAppVersion().await()
+
+    //获取音乐信息
+    private val getMusicService = ServiceCreator.create(MusicService::class.java)
+    suspend fun getMusic(query: String) = getMusicService.getMusic(query).await()
 
     private suspend fun <T> Call<T>.await():T{
         //Log.d("执行挂起函数","挂起")

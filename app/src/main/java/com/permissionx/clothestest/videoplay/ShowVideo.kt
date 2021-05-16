@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.permissionx.clothestest.ItemId
 import com.permissionx.clothestest.R
+import com.permissionx.clothestest.URL
 import com.permissionx.clothestest.adapter.SelectVideoByTextAdapter
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_main.*
@@ -110,8 +111,10 @@ class ShowVideo : AppCompatActivity() {
             val response=result.getOrNull() as GetUrlResponse
             Log.d("URL",response.data)
             if (response.code==200){
-                val intent=Intent(this, VideoPlayWebview::class.java)
-                intent.putExtra("URL",response.data)
+                //此处打开播放器
+                val intent=Intent(this, SystemMediaVideoPlay::class.java)
+                URL.isPlayingURL=response.data
+                //intent.putExtra("URL",response.data)
                 startActivity(intent)
             }else{
                 //错误的话就返回后端传回来的错误信息

@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.util.Log
-import com.permissionx.clothestest.network.GetAppVersionService
 import com.permissionx.clothestest.network.UpdateServiceCreator
 import retrofit2.Call
 import retrofit2.Callback

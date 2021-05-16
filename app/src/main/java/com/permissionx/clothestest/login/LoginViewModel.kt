@@ -3,7 +3,7 @@ package com.permissionx.clothestest.login
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.MutableLiveData
-import com.permissionx.clothestest.Repository
+import com.permissionx.clothestest.network.Repository
 
 class LoginViewModel: ViewModel() {
     private val requestBodyLiveData= MutableLiveData<LoginRequest>()

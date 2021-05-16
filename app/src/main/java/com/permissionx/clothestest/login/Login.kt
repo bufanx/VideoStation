@@ -1,14 +1,11 @@
 package com.permissionx.clothestest.login
 
 import android.app.AlertDialog
-import android.app.DownloadManager
-import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.os.Environment
 import android.util.Log
 import android.view.View
 import android.view.WindowManager
@@ -20,26 +17,14 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.permissionx.clothestest.MainActivity
 import com.permissionx.clothestest.R
-import com.permissionx.clothestest.Repository
-import com.permissionx.clothestest.Repository.getAppVersion
 import com.permissionx.clothestest.URL
-import com.permissionx.clothestest.network.GetAppVersionService
-import com.permissionx.clothestest.network.UpdateServiceCreator
 import com.permissionx.clothestest.register.Register
-import com.permissionx.clothestest.update.GithubRelease
 import com.permissionx.clothestest.update.UpdateViewModel
 import com.permissionx.clothestest.update.Utils
 import com.permissionx.clothestest.update.Version
-import com.permissionx.clothestest.videoplay.VideoPlayWebview
 import kotlinx.android.synthetic.main.activity_login.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import java.lang.RuntimeException
-import kotlin.concurrent.thread
 import kotlin.properties.Delegates
-import kotlin.random.Random
-import kotlin.text.toInt as toInt1
 
 class Login : AppCompatActivity() {
 

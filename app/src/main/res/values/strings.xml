@@ -17,4 +17,5 @@
     <string name="title_activity_search_game">SearchGame</string>
     <string name="title_activity_show_game_info">ShowGameInfo</string>
     <string name="title_activity_show_game_web_view">ShowGameWebView</string>
+    <string name="title_activity_system_media_video_play">SystemMediaVideoPlay</string>
 </resources>

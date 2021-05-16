@@ -45,6 +45,10 @@ class VideoAdapter(private val videoList:List<VideoItem>, private val context: C
             context.startActivity(intent)
         }
         holder.itemimg.setImageURL(video.pic_url)
+        when(video.video_type){
+            "1" -> video.video_type="动漫"
+            else -> video.video_type="其他"
+        }
         holder.itemtitle.text = "剧名:${video.title}\n" +
                 "类型:${video.video_type}\n"+
                 "集数:${video.num.toString()}集"
