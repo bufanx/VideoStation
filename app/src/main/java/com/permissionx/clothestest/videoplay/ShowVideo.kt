@@ -62,6 +62,19 @@ class ShowVideo : AppCompatActivity() {
                 select_video_rcv.adapter=adapterText
                 showvideo_progressBar.visibility = View.INVISIBLE
                 ItemId.videoNum = 0
+                adapterText.setOnItemClickListener(object : SelectVideoByTextAdapter.OnItemClickListener {
+                    override fun onItemClick(view: View, position: Int) {
+                        ItemId.itemId = position + 1
+                        Toast.makeText(this@ShowVideo,"已选中第${ItemId.itemId}集,请稍作等待!",Toast.LENGTH_SHORT).show()
+                        val requestbody= GetUrlRequest(videoId,ItemId.itemId)
+                        viewModel.getVideoUrl(requestbody)
+                    }
+
+                    override fun onItemLongClick(view: View, position: Int) {
+                        Toast.makeText(this@ShowVideo,"...",Toast.LENGTH_SHORT).show()
+                    }
+
+                })
             }
         })
         textCardView.setOnClickListener {
@@ -107,19 +120,6 @@ class ShowVideo : AppCompatActivity() {
                 Toast.makeText(this,response!!.msg,Toast.LENGTH_SHORT).show()
             }
         })
-//        adapterText.setOnItemClickListener(object : SelectVideoByTextAdapter.OnItemClickListener {
-//            override fun onItemClick(view: View, position: Int) {
-//                ItemId.itemId = position + 1
-//                Toast.makeText(this@ShowVideo,"已选中第${ItemId.itemId}集,请稍作等待!",Toast.LENGTH_SHORT).show()
-//                val requestbody= GetUrlRequest(videoId,ItemId.itemId)
-//                viewModel.getVideoUrl(requestbody)
-//            }
-//
-//            override fun onItemLongClick(view: View, position: Int) {
-//                Toast.makeText(this@ShowVideo,"...",Toast.LENGTH_SHORT).show()
-//            }
-//
-//        })
         show_video_image.setImageURL(picUrl)
         show_video_text.text=videoDescription
         viewModel.responseBodyLiveData.observe(this,{ result->
