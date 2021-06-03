@@ -7,6 +7,6 @@ import retrofit2.http.Query
 
 interface GetVideoUrlService {
 
-    @GET("video/v2/play_one")
+    @GET("video/v1/play_one")
     fun getVideoUrl(@Query("video_id") video_id: Int, @Query("item_id") item_id:Int): Call<GetUrlResponse>
 }

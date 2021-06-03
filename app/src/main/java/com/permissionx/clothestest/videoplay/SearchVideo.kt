@@ -1,5 +1,6 @@
 package com.permissionx.clothestest.videoplay
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
@@ -13,6 +14,7 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import com.permissionx.clothestest.ItemId
 import com.permissionx.clothestest.R
 import com.permissionx.clothestest.adapter.VideoAdapter
 import kotlinx.android.synthetic.main.activity_search_video.*
@@ -21,7 +23,7 @@ class SearchVideo : AppCompatActivity() {
 
     private val viewModel by lazy { ViewModelProvider(this).get(SearchVideoViewModel::class.java) }
 
-    lateinit var response: SearchVideoResponse
+    private lateinit var response: SearchVideoResponse
     private var videoList=ArrayList<VideoItem>()
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
@@ -56,6 +58,13 @@ class SearchVideo : AppCompatActivity() {
             video_play_rcv.adapter=adapter
             Log.d("videoList","$videoList")
             search_video_pgb.visibility=View.GONE
+        })
+        ItemId.videoId.observe(this,{
+            val videoId : Int? = ItemId.videoId.value
+            if (videoId!=null){
+                val intent = Intent(this,ShowVideo::class.java)
+                startActivity(intent)
+            }
         })
     }
 

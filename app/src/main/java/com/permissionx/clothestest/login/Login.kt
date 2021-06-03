@@ -73,7 +73,8 @@ class Login : AppCompatActivity() {
                     temDialog!!.show()
                 }
             }else{
-                    throw RuntimeException("网络异常!")
+                    Toast.makeText(this,"网络异常",Toast.LENGTH_SHORT).show()
+                    //throw RuntimeException("网络异常!")
             }
         })
         setContentView(R.layout.activity_login)

@@ -8,6 +8,7 @@ import com.permissionx.clothestest.music.MusicService
 import com.permissionx.clothestest.register.RegisterRequest
 import com.permissionx.clothestest.register.RegisterService
 import com.permissionx.clothestest.update.GetAppVersionService
+import com.permissionx.clothestest.videoplay.GetVideoNumService
 import com.permissionx.clothestest.videoplay.GetVideoUrlService
 import com.permissionx.clothestest.videoplay.RefreshVideoService
 import com.permissionx.clothestest.videoplay.VideoService
@@ -52,6 +53,10 @@ object NetWork {
     //获取音乐信息
     private val getMusicService = ServiceCreator.create(MusicService::class.java)
     suspend fun getMusic(query: String) = getMusicService.getMusic(query).await()
+
+    //获取集数
+    private val getVideoNumService = ServiceCreator.create(GetVideoNumService::class.java)
+    suspend fun getVideoNum(videoId:Int) = getVideoNumService.getVideoNum(videoId).await()
 
     private suspend fun <T> Call<T>.await():T{
         //Log.d("执行挂起函数","挂起")

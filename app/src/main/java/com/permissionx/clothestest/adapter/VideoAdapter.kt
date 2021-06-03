@@ -5,13 +5,17 @@ import com.permissionx.clothestest.R
 import com.permissionx.clothestest.resource.MyImageView
 import android.content.Context
 import android.content.Intent
+import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.lifecycle.ViewModelLazy
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.permissionx.clothestest.ItemId
+import com.permissionx.clothestest.videoplay.GetVideoNumViewModel
 import com.permissionx.clothestest.videoplay.ShowVideo
 import com.permissionx.clothestest.videoplay.VideoItem
 import com.permissionx.clothestest.videoplay.VideoPlayWebview
@@ -36,13 +40,9 @@ class VideoAdapter(private val videoList:List<VideoItem>, private val context: C
             val position=holder.adapterPosition
             Log.d("Adapter","${position},${videoList}")
             val video=videoList[position]
-            //点击事件
-            val intent= Intent(context, ShowVideo::class.java)
-            intent.putExtra("pic_url",video.pic_url)
-            intent.putExtra("video_description",video.description)
-            intent.putExtra("video_num",video.num)
-            intent.putExtra("video_id",video.video_id)
-            context.startActivity(intent)
+            ItemId._videoId.value = video.video_id
+            ItemId.videoDescription = video.description
+            ItemId.picUrl = video.pic_url
         }
         holder.itemimg.setImageURL(video.pic_url)
         when(video.video_type){
@@ -50,8 +50,7 @@ class VideoAdapter(private val videoList:List<VideoItem>, private val context: C
             else -> video.video_type="其他"
         }
         holder.itemtitle.text = "剧名:${video.title}\n" +
-                "类型:${video.video_type}\n"+
-                "集数:${video.num.toString()}集"
+                "类型:${video.video_type}\n"
     }
 
     override fun getItemCount(): Int {

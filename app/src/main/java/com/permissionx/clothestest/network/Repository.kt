@@ -149,10 +149,25 @@ object Repository {
             if (musicResponse.code == 200) {
                 Result.success(musicResponse)
             } else {
-                Result.failure(java.lang.RuntimeException("网络超时"))
+                Result.failure(RuntimeException("网络超时"))
             }
         } catch (e: Exception) {
             Result.failure<GetMusicResponse>(e)
+        }
+        emit(result)
+    }
+
+    //获取视频集数
+    fun getVideoNum(videoId:Int) = liveData(Dispatchers.IO) {
+        val result = try {
+            val getVideoNumResponse = NetWork.getVideoNum(videoId)
+            if (getVideoNumResponse.code == 200){
+                Result.success(getVideoNumResponse)
+            }else{
+                Result.failure(RuntimeException("网络超时"))
+            }
+        }catch (e:Exception){
+            Result.failure<GetUrlResponse>(e)
         }
         emit(result)
     }

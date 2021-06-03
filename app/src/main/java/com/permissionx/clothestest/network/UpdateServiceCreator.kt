@@ -6,7 +6,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object UpdateServiceCreator {
 
-    private const val BASE_URL=URL.APP_VERSION_BASE_URL
+    private const val BASE_URL=URL.BASE_URL
 
     private val retrofit= Retrofit.Builder()
             .baseUrl(BASE_URL)

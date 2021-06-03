@@ -7,6 +7,6 @@ import retrofit2.http.Query
 
 interface VideoService {
 
-    @GET("video/v2/search")
+    @GET("video/v1/search")
     fun searchVideos(@Query("name") query: String):Call<SearchVideoResponse>
 }
