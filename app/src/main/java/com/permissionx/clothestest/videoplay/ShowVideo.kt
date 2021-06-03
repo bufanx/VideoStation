@@ -116,6 +116,7 @@ class ShowVideo : AppCompatActivity() {
 //                select_video_rcv.adapter=adapterText
                 swipeRefresh.isRefreshing=false
             }else{
+
                 //错误的话就返回后端传回来的错误信息
                 Toast.makeText(this,response!!.msg,Toast.LENGTH_SHORT).show()
             }
